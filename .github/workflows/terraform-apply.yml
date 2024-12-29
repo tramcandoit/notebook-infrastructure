@@ -26,12 +26,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Download tfplan Artifacts
-      - name: Download Plan Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: tfplan
-          path: ${{ env.CONFIG_DIRECTORY }}
+      # # Step 2: Download tfplan Artifacts
+      # - name: Download Plan Artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: tfplan
+      #     path: ${{ env.CONFIG_DIRECTORY }}
 
       # Step 3: Set up Terraform
       - name: Set up Terraform
