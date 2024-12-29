@@ -1,9 +1,9 @@
 terraform {
     backend "s3" {
-        bucket = "ticketselling-nt548-terraform"
+        bucket = "notebook-infrastructure"
         key = "terraform.tfstate"
-        region = "ap-southeast-1"
-        dynamodb_table = "ticketselling_tfstate_lock"
+        region = "us-east-1"
+        dynamodb_table = "notebook-terraform-backend"
     }
 }
 
