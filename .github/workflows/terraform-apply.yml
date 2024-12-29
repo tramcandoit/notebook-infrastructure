@@ -3,7 +3,7 @@ name: Terraform Apply Workflow
 on:
   workflow_run:
     workflows:
-      - Terraform Plan Workflow # Triggered after the Plan workflow completes
+      - "Terraform Plan Workflow" # Triggered after the Plan workflow completes
     types:
       - completed # Trigger only on workflow completion
 
