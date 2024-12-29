@@ -1,9 +1,11 @@
-name: Terraform Workflow
+name: Terraform Apply Workflow
 
 on:
-  pull_request:
-    branches:
-      - master # Trigger when a PR is merged into the master branch
+  workflow_run:
+    workflows:
+      - Terraform Plan Workflow # Triggered after the Plan workflow completes
+    types:
+      - completed # Trigger only on workflow completion
 
 env:
   CONFIG_DIRECTORY: "."
@@ -11,12 +13,13 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
-  terraform-deploy:
+  terraform-apply:
     runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     permissions:
       contents: read
-      pull-requests: write 
 
     steps:
       # Step 1: Checkout the code
@@ -28,7 +31,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.5
-      
+
       # Step 3: Configure AWS credentials
       - name: Configure AWS CLI
         run: |
@@ -36,18 +39,12 @@ jobs:
           aws configure set aws_secret_access_key ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws configure set default.region us-east-1
 
-      # Step 4: Configure Terraform Backend
+      # Step 4: Initialize Terraform
       - name: Terraform Init
         run: terraform init
         working-directory: ${{ env.CONFIG_DIRECTORY }}
 
-      # Step 5: Terraform Plan
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-        working-directory: ${{ env.CONFIG_DIRECTORY }}
-
       # Step 5: Terraform Apply
       - name: Terraform Apply
-        if: github.event.pull_request.merged == true # Only run if the PR was merged
         run: terraform apply -auto-approve tfplan
         working-directory: ${{ env.CONFIG_DIRECTORY }}
