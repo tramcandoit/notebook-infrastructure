@@ -43,12 +43,12 @@ jobs:
 
       # Step 5: Terraform Plan
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan
         working-directory: ${{ env.CONFIG_DIRECTORY }}
 
-         # Step 6: Upload tfplan as Artifact
-      - name: Upload Plan Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: tfplan
-          path: ${{ env.CONFIG_DIRECTORY }}/tfplan
+      #    # Step 6: Upload tfplan as Artifact
+      # - name: Upload Plan Artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: tfplan
+      #     path: ${{ env.CONFIG_DIRECTORY }}/tfplan
