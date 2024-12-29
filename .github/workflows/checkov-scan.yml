@@ -25,4 +25,4 @@ jobs:
 
       - name: Run Checkov Scan
         run: |
-          checkov --skip-check CKV_AWS_339,CKV_AWS_39,CKV_AWS_38,CKV_AWS_58,CKV_TF_1,CKV_TF_2 CKV2_GHA_1 -d .
+          checkov --skip-check CKV_AWS_339,CKV_AWS_39,CKV_AWS_38,CKV_AWS_58,CKV_TF_1,CKV_TF_2,CKV2_GHA_1 -d .
