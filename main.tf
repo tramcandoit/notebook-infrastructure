@@ -14,7 +14,6 @@ module "aws_vpc" {
 }
 
 # EKS Cluster
-# checkov:skip=CKV_AWS_339 Reason: Using a specific Kubernetes version for compatibility
 resource "aws_eks_cluster" "eks-cluster" {
   name     = var.cluster_config.name
   role_arn = aws_iam_role.EKSClusterRole.arn
