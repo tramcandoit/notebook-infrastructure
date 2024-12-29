@@ -26,7 +26,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # # Step 2: Download tfplan Artifacts
+      # Step 2: Download tfplan Artifacts
       # - name: Download Plan Artifact
       #   uses: actions/download-artifact@v3
       #   with:
