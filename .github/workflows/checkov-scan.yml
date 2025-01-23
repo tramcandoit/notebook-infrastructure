@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Checkov Scan
         run: |
-          checkov --directory . --output-file checkov-results.json --output json
+          checkov --directory . --output-file checkov-results.json --output json --download-external-modules true
 
       - name: Convert JSON to SARIF
         run: |
