@@ -28,16 +28,16 @@
 
         - name: Run Checkov Scan
           run: |
-            checkov --directory . --output-file checkov-results.json --output json --download-external-modules true || true
+            checkov --directory . --output-file checkov-results.sarif --output sarif --download-external-modules true || true
 
-        - name: Download sarif-cli
-          run: |
-            curl -L -o sarif-cli https://github.com/microsoft/sarif-cli/releases/latest/download/sarif-cli-linux-x64
-            chmod +x sarif-cli
+        # - name: Download sarif-cli
+        #   run: |
+        #     curl -L -o sarif-cli https://github.com/microsoft/sarif-cli/releases/latest/download/sarif-cli-linux-x64
+        #     chmod +x sarif-cli
 
-        - name: Convert JSON to SARIF
-          run: |
-            ./sarif-cli convert checkov-results.json --output checkov-results.sarif
+        # - name: Convert JSON to SARIF
+        #   run: |
+        #     ./sarif-cli convert checkov-results.json --output checkov-results.sarif
 
         - name: Upload results
           uses: github/codeql-action/upload-sarif@v3
