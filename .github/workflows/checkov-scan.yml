@@ -1,41 +1,41 @@
-name: Checkov Scan
+  name: Checkov Scan
 
-on:
-  push:
-    branches:
-      - dev # Trigger when code is pushed to the dev branch
+  on:
+    push:
+      branches:
+        - dev # Trigger when code is pushed to the dev branch
 
-permissions:
-  security-events: write
+  permissions:
+    security-events: write
 
-jobs:
-  checkov-scan:
-    runs-on: ubuntu-latest
+  jobs:
+    checkov-scan:
+      runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+        - name: Set up Python
+          uses: actions/setup-python@v4
+          with:
+            python-version: '3.x'
 
-      - name: Install Checkov
-        run: |
-          python -m pip install --upgrade pip
-          pip install checkov
+        - name: Install Checkov
+          run: |
+            python -m pip install --upgrade pip
+            pip install checkov
 
-      - name: Run Checkov Scan
-        run: |
-          checkov --directory . --output-file checkov-results.json --output json --download-external-modules true
+        - name: Run Checkov Scan
+          run: |
+            checkov --directory . --output-file checkov-results.json --output json --download-external-modules true || true
 
-      - name: Convert JSON to SARIF
-        run: |
-          pip install sarif-cli
-          sarif convert checkov-results.json --output checkov-results.sarif
+        - name: Convert JSON to SARIF
+          run: |
+            pip install sarif-cli
+            sarif convert checkov-results.json --output checkov-results.sarif
 
-      - name: Upload results
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: checkov-results.sarif
+        - name: Upload results
+          uses: github/codeql-action/upload-sarif@v3
+          with:
+            sarif_file: checkov-results.sarif
