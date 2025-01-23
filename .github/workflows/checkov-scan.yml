@@ -5,6 +5,9 @@ on:
     branches:
       - dev # Trigger when code is pushed to the dev branch
 
+permissions:
+  security-events: write
+
 jobs:
   checkov-scan:
     runs-on: ubuntu-latest
@@ -25,7 +28,12 @@ jobs:
 
       - name: Run Checkov Scan
         run: |
-          checkov --directory . --output-file checkov-results.sarif --output-format sarif
+          checkov --directory . --output-file checkov-results.json --output json
+
+      - name: Convert JSON to SARIF
+        run: |
+          pip install sarif-cli
+          sarif convert checkov-results.json --output checkov-results.sarif
 
       - name: Upload results
         uses: github/codeql-action/upload-sarif@v3
